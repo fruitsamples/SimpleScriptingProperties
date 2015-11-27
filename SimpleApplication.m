@@ -1,55 +1,52 @@
 /*
-
-File: SimpleApplication.m
-
-Abstract: for our application scripting class, we have
-implemented the properties as element accessors in a category
-of NSApplication. This file contains the implementation
-for that.
-
-Version: 1.0
-
-Disclaimer: IMPORTANT:  This Apple software is supplied to you by 
-Apple Inc. ("Apple") in consideration of your agreement to the
-following terms, and your use, installation, modification or
-redistribution of this Apple software constitutes acceptance of these
-terms.  If you do not agree with these terms, please do not use,
-install, modify or redistribute this Apple software.
-
-In consideration of your agreement to abide by the following terms, and
-subject to these terms, Apple grants you a personal, non-exclusive
-license, under Apple's copyrights in this original Apple software (the
-"Apple Software"), to use, reproduce, modify and redistribute the Apple
-Software, with or without modifications, in source and/or binary forms;
-provided that if you redistribute the Apple Software in its entirety and
-without modifications, you must retain this notice and the following
-text and disclaimers in all such redistributions of the Apple Software. 
-Neither the name, trademarks, service marks or logos of Apple Inc. 
-may be used to endorse or promote products derived from the Apple
-Software without specific prior written permission from Apple.  Except
-as expressly stated in this notice, no other rights or licenses, express
-or implied, are granted by Apple herein, including but not limited to
-any patent rights that may be infringed by your derivative works or by
-other works in which the Apple Software may be incorporated.
-
-The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
-MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
-FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
-OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
-
-IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
-OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
-MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
-AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
-STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-
-Copyright (C) 2008 Apple Inc. All Rights Reserved.
- 
-*/ 
+     File: SimpleApplication.m 
+ Abstract: For our application scripting class, we have
+ implemented the properties as element accessors in a
+ category of NSApplication. This file contains the
+ interface for that. 
+  Version: 1.2 
+  
+ Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple 
+ Inc. ("Apple") in consideration of your agreement to the following 
+ terms, and your use, installation, modification or redistribution of 
+ this Apple software constitutes acceptance of these terms.  If you do 
+ not agree with these terms, please do not use, install, modify or 
+ redistribute this Apple software. 
+  
+ In consideration of your agreement to abide by the following terms, and 
+ subject to these terms, Apple grants you a personal, non-exclusive 
+ license, under Apple's copyrights in this original Apple software (the 
+ "Apple Software"), to use, reproduce, modify and redistribute the Apple 
+ Software, with or without modifications, in source and/or binary forms; 
+ provided that if you redistribute the Apple Software in its entirety and 
+ without modifications, you must retain this notice and the following 
+ text and disclaimers in all such redistributions of the Apple Software. 
+ Neither the name, trademarks, service marks or logos of Apple Inc. may 
+ be used to endorse or promote products derived from the Apple Software 
+ without specific prior written permission from Apple.  Except as 
+ expressly stated in this notice, no other rights or licenses, express or 
+ implied, are granted by Apple herein, including but not limited to any 
+ patent rights that may be infringed by your derivative works or by other 
+ works in which the Apple Software may be incorporated. 
+  
+ The Apple Software is provided by Apple on an "AS IS" basis.  APPLE 
+ MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION 
+ THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS 
+ FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND 
+ OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS. 
+  
+ IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL 
+ OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, 
+ MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED 
+ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE), 
+ STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE 
+ POSSIBILITY OF SUCH DAMAGE. 
+  
+ Copyright (C) 2011 Apple Inc. All Rights Reserved. 
+  
+ */ 
 
 
 #import "SimpleApplication.h"
@@ -58,9 +55,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation NSApplication (SimpleApplication)
 
+    /* Instead of sythesizing our properties here, we implement them manually
+       in order to perform logging for debugging purposes. */
 
-	
-	/* kvc method for the 'special version' AppleScript property.
+
+
+	/* kvc Cocoa property getter for the 'special version' AppleScript property.
 	
 	We have defined the 'special version' string AppleScript property as read only
 	in the scripting definition file so we only provide a getter method here.	
@@ -80,9 +80,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 NSNumber* gInputValue = nil;
 
 
-	/* kvc methods for the 'input value' integer AppleScript property.  these are 
-	implemented in the same way as most getter and setter methods, except
-	we do an extra initialization check in the getter method. */
+	/* kvc Cocoa property getter/setter for the 'input value' integer AppleScript 
+    property.  these are  implemented in the same way as most getter and setter 
+    methods, except we do an extra initialization check in the getter method. */
 - (NSNumber*) inputValue {
 		/* initial value */
 	if ( gInputValue == nil ) {
@@ -110,13 +110,13 @@ NSNumber* gInputValue = nil;
 NSNumber* gScalingFactor = nil;
 		
 
-	/* kvc methods for the 'scaling factor' real AppleScript property.  these are 
-	implemented in the same way as most getter and setter methods, except
-	we do an extra initialization check in the getter method. */
+	/* kvc Cocoa property getter/setter for the 'scaling factor' real AppleScript 
+    property.  these are implemented in the same way as most getter and setter 
+    methods, except we do an extra initialization check in the getter method. */
 - (NSNumber*) scalingFactor {
 		/* initial value */
 	if ( gScalingFactor == nil ) {
-		gScalingFactor = [[NSNumber alloc] numberWithDouble: 1.0];
+		gScalingFactor = [[NSNumber alloc] initWithDouble: 1.0];
 	}
 	SLOG(@"app's scaling factor = %@", gScalingFactor);
 		/* return the scaling factor value */
@@ -134,7 +134,7 @@ NSNumber* gScalingFactor = nil;
 
 
 	
-	/* kvc methods for the 'output value' real AppleScript property.
+	/* kvc Cocoa property getter for the 'output value' real AppleScript property.
 	
 	We have defined the 'output value' AppleScript property as read only
 	in the scripting definition file so we only provide a getter method here.
@@ -145,8 +145,7 @@ NSNumber* gScalingFactor = nil;
 	*/
 - (NSNumber*) outputValue {
 	NSNumber* theResult;
-	theResult = [NSNumber numberWithDouble:
-		([gInputValue doubleValue] * [gScalingFactor doubleValue])];
+	theResult = [NSNumber numberWithDouble:([gInputValue doubleValue] * [gScalingFactor doubleValue])];
 	SLOG(@"app's output value = %@", theResult);
 	return theResult;
 }
@@ -160,8 +159,8 @@ NSNumber* gScalingFactor = nil;
 NSString* gDescription = nil;
 
 
-	/* kvc methods for the 'description' string AppleScript property.  These are 
-	implemented in the same way as most getter and setter methods, except
+	/* kvc Cocoa property getter/setter for the 'description' string AppleScript
+    property.  These are implemented in the same way as most getter and setter methods, except
 	we do an extra initialization check in the getter method. */
 - (NSString*) description {
 		/* initial value */
@@ -188,8 +187,8 @@ NSString* gDescription = nil;
 	class' data.  So, we use globals for that storage.  */
 NSNumber* gReady = nil;
 
-	/* kvc methods for the 'ready' boolean AppleScript property.  These are 
-	implemented in the same way as most getter and setter methods, except
+	/* kvc Cocoa property getter/setter for the 'ready' boolean AppleScript
+    property.  These are implemented in the same way as most getter and setter methods, except
 	we do an extra initialization check in the getter method. */
 - (NSNumber*) ready {
 		/* initial value */
@@ -216,8 +215,8 @@ NSNumber* gReady = nil;
 	class' data.  So, we use globals for that storage.  */
 NSDate* gModificationDate = nil;
 
-	/* kvc methods for the 'modification date' date AppleScript property.
-	These are implemented in the same way as most getter and setter
+	/* kvc Cocoa property getter/setter for the 'modification date' date AppleScript
+    property. These are implemented in the same way as most getter and setter
 	methods, except we do an extra initialization check in the
 	getter method. */
 - (NSDate*) modificationDate {
@@ -266,9 +265,9 @@ NSDate* gModificationDate = nil;
 	class' data.  So, we use globals for that storage.  */
 NSNumber *gSimplicityLevel = nil;			
 
-	/* kvc methods for the 'simplicity level' AppleScript property.
+	/* kvc Cocoa property getter/setter for the 'simplicity level' AppleScript property.
 	
-	this property uses an AppleScript enumeration defined in our
+	This property uses an AppleScript enumeration defined in our
 	scripting definition file.  The interesting thing to note here
 	is that there is really nothing special you have to do in order
 	to use enumeration values - they are stored in NSNumbers.*/
@@ -292,7 +291,7 @@ NSNumber *gSimplicityLevel = nil;
 
 
 
-	/* kvc methods for the 'scaling factor' AppleScript property.
+	/* kvc Cocoa property getter for the 'scaling factor' AppleScript property.
 	
 	This is another example of a calculated, read-only property.
 	Here we map the various simplicity levels defined in the
